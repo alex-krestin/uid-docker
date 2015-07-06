@@ -38,7 +38,7 @@ RUN echo 'update and install maven'
 RUN apt-get update && apt-get --no-install-recommends install maven -y 
 RUN git clone https://github.com/GruppoPBDMNG-3/url.id.git; 
 RUN cd url.id/dist/; mvn package
-RUN cd url.id/dist/target; mkdir uid; cp uid-1.0.jar uid/; cd ../; cp -avr public/en/ target/uid/; cp GeoLite2-Country.mmdb target/uid/;
+RUN cd url.id/dist/target; mkdir uid; cp uid-1.0.jar uid/; cd ../; cp -avr public/ target/uid/; cp GeoLite2-Country.mmdb target/uid/;
 RUN cp -avr url.id/dist/target/uid bin/; cd ../../; rm -rf url.id
 ADD uid.sh /usr/local/hbase/bin/uid.sh
 RUN ["chmod", "+x", "/usr/local/hbase/bin/uid.sh"]
