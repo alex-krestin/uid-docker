@@ -40,7 +40,9 @@ RUN git clone https://github.com/alex-krestin/url.id.git;
 RUN cd url.id/dist/; mvn package
 RUN cd url.id/dist/target; mkdir uid; cp uid-1.0.jar uid/; cd ../; cp -avr public/ target/uid/; cp GeoLite2-Country.mmdb target/uid/;
 RUN cp -avr url.id/dist/target/uid bin/; cd ../../; rm -rf url.id
-ADD uid.sh /usr/local/hbase/bin/uid.sh
-RUN ["chmod", "+x", "/usr/local/hbase/bin/uid.sh"]
+
+ENV PATH $PATH:/bin/uid
+ADD uid.sh /bin/uid/uid.sh
+RUN ["chmod", "+x", "/bin/uid/uid.sh"]
 
 CMD /usr/local/hbase/start-tail.sh
