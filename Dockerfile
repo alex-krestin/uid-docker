@@ -43,6 +43,10 @@ RUN cp -avr url.id/dist/target/uid bin/; cd ../../; rm -rf url.id
 
 ENV PATH $PATH:/bin/uid
 ADD uid.sh /bin/uid/uid.sh
+ADD uid2.sh /bin/uid/uid2.sh
+ADD uid3.sh /bin/uid/uid3.sh
 RUN ["chmod", "+x", "/bin/uid/uid.sh"]
+RUN ["chmod", "+x", "/bin/uid/uid2.sh"]
+RUN ["chmod", "+x", "/bin/uid/uid3.sh"]
 
 CMD /usr/local/hbase/start-tail.sh
