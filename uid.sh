@@ -1,1 +1,0 @@
-java -jar ./uid-1.0.jar $1

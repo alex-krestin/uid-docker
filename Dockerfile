@@ -39,14 +39,6 @@ RUN apt-get update && apt-get --no-install-recommends install maven -y
 RUN git clone https://github.com/alex-krestin/url.id.git; 
 RUN cd url.id/dist/; mvn package
 RUN cd url.id/dist/target; mkdir uid; cp uid-1.0.jar uid/; cd ../; cp -avr public/ target/uid/; cp GeoLite2-Country.mmdb target/uid/;
-RUN cp -avr url.id/dist/target/uid bin/; cd ../../; rm -rf url.id
-
-ENV PATH $PATH:/bin/uid
-ADD uid.sh /bin/uid/uid.sh
-ADD uid2.sh /bin/uid/uid2.sh
-ADD uid3.sh /bin/uid/uid3.sh
-RUN ["chmod", "+x", "/bin/uid/uid.sh"]
-RUN ["chmod", "+x", "/bin/uid/uid2.sh"]
-RUN ["chmod", "+x", "/bin/uid/uid3.sh"]
+RUN cp -avr url.id/dist/target/uid /; cd ../../; rm -rf url.id
 
 CMD /usr/local/hbase/start-tail.sh
