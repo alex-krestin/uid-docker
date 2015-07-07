@@ -34,11 +34,26 @@ EXPOSE 8080
 
 #USER root
 
-RUN echo 'update and install maven'
-RUN apt-get update && apt-get --no-install-recommends install maven -y 
-RUN git clone https://github.com/GruppoPBDMNG-3/url.id.git; 
-RUN cd url.id/dist/; mvn package
-RUN cd url.id/dist/target; mkdir uid; cp uid-1.0.jar uid/; cd ../; cp -avr public/ target/uid/; cp GeoLite2-Country.mmdb target/uid/;
-RUN cp -avr url.id/dist/target/uid /; cd ../../; rm -rf url.id
+## install maven
+RUN apt-get update && apt-get --no-install-recommends install maven -y
+RUN git clone https://github.com/GruppoPBDMNG-3/url.id.git;
+
+## build with maven
+RUN cd url.id/dist/ ; mvn package
+
+## move all files from dist/ and jar file from target/ to application folder
+RUN cp -avr /url.id/dist/* /url.id/ ; cp /url.id/target/uid-1.0.jar /url.id/
+
+## delete source files
+RUN rm -rf /url.id/target /url.id/src /url.id/dist /url.id/pom.xml /url.id/README.md
+
+## Add start script
+ADD uid.sh /url.id/uid.sh
+RUN ["chmod", "+x", "/url.id/uid.sh"]
+
+## move application folder to /opt
+RUN mv /url.id /opt
+
+ENV PATH $PATH:/opt/url.id
 
 CMD /usr/local/hbase/start-tail.sh
