@@ -1,0 +1,1 @@
+cd /opt/url.id && java -jar uid-1.0.jar $1
